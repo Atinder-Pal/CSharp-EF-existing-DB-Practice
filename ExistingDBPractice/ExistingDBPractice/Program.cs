@@ -10,25 +10,39 @@ namespace ExistingDBPractice
         static void Main(string[] args)
         {
             string input;
-            Console.Write("Please enter a First Name: ");
-            input = Console.ReadLine().Trim();
-
-            // Dispose of whatever is in the parentheses when the code block ends.
-            using (PersonContext context = new PersonContext())
-            {                
-                List<Person> people = context.Person.Where(x => x.FirstName.ToLower() == input.ToLower()).ToList();
-                foreach (Person person in people)
+            bool isValid = false;
+            while(!isValid)
+            {
+                Console.Write("Please enter a First Name: or type 'quit' to exit ");
+                input = Console.ReadLine().Trim();
+                if( !(input.ToLower() == "quit") )
                 {
-                    Console.WriteLine($"Full Name of this person is-{person.FirstName} {person.LastName} ");
+                    using (PersonContext context = new PersonContext())
+                    {
+                        List<Person> people = context.Person.Where(x => x.FirstName.ToLower() == input.ToLower()).ToList();
+                        //Citation
+                        //How to check if list is empty
+                        //https://www.tutorialspoint.com/How-to-check-if-a-Chash-list-is-empty
+                        isValid = people.Any();
+                        //End Citation
+                        if (isValid)
+                        {
+                            foreach (Person person in people)
+                            {
+                                Console.WriteLine($"Full Name of this person is-{person.FirstName} {person.LastName} ");
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("ERROR: Name not found.");
+                        }
+                    }
                 }
-                //Citation
-                //How to check if list is empty
-                //https://www.tutorialspoint.com/How-to-check-if-a-Chash-list-is-empty
-                if (!people.Any())
+                else
                 {
-                    Console.WriteLine("ERROR: Name not found.");
+                    isValid = true;
                 }
-            }
+            }          
         }
     }
 }
