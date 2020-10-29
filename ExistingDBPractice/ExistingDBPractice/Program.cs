@@ -1,6 +1,7 @@
 ﻿using ExistingDBPractice.Models;
 using System;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace ExistingDBPractice
 {
@@ -14,13 +15,16 @@ namespace ExistingDBPractice
 
             // Dispose of whatever is in the parentheses when the code block ends.
             using (PersonContext context = new PersonContext())
-            {
-                try
-                {                    
-                    Person person = context.Person.Where(x => x.FirstName.ToLower() == input.ToLower()).Single();              
-                    Console.WriteLine($"Full Name of this person is-{person.FirstName} {person.LastName} ");               
+            {                
+                List<Person> people = context.Person.Where(x => x.FirstName.ToLower() == input.ToLower()).ToList();
+                foreach (Person person in people)
+                {
+                    Console.WriteLine($"Full Name of this person is-{person.FirstName} {person.LastName} ");
                 }
-                catch
+                //Citation
+                //How to check if list is empty
+                //https://www.tutorialspoint.com/How-to-check-if-a-Chash-list-is-empty
+                if (!people.Any())
                 {
                     Console.WriteLine("ERROR: Name not found.");
                 }
