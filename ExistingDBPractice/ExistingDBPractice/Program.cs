@@ -29,7 +29,12 @@ namespace ExistingDBPractice
                         {
                             foreach (Person person in people)
                             {
-                                Console.WriteLine($"Full Name of this person is-{person.FirstName} {person.LastName} ");
+                                List<string> ph = context.Phonenumber.Where(x => x.PersonId == person.Id).Select(y => y.Number).ToList();
+                                Console.WriteLine($"Full Name of this person is-{person.FirstName} {person.LastName}  and Phone Number is ");
+                                //Citation
+                                //https://stackoverflow.com/questions/15350363/iterating-through-a-list-with-out-using-foreach-loop                                
+                                ph.ForEach(i => Console.WriteLine(i));  
+                                //End Citation
                             }
                         }
                         else
