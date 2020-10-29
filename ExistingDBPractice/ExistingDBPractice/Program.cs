@@ -22,7 +22,7 @@ namespace ExistingDBPractice
                 }
                 catch
                 {
-                    Console.WriteLine("ERROR: Please ensure input is valid and try again.");
+                    Console.WriteLine("ERROR: Name not found.");
                 }
             }
         }
